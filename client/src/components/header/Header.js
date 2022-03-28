@@ -5,7 +5,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import useStyles from './styles';
 
-const Header = (setCoords) => {
+const Header = ({ setCoords, isDesktop }) => {
 	const classes = useStyles();
 
 	const [autoComplete, setAutoComplete] = useState(null);
@@ -23,7 +23,17 @@ const Header = (setCoords) => {
 		<AppBar position="static">
 			<Toolbar className={classes.toolbar}>
 				<Typography variant="h5" className={classes.title}>
-					<a>Traveller</a>
+					{isDesktop ? (
+						<a>Traveller</a>
+					) : (
+						<img
+							src="logo4.jpg"
+							height="30"
+							alt="icon"
+							width="30"
+							className={classes.image}
+						/>
+					)}
 				</Typography>
 				<Box display="flex">
 					<Typography variant="h6" className={classes.title}>

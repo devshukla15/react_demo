@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CssBaseline, Grid } from '@material-ui/core';
+import { CssBaseline, Grid, useMediaQuery } from '@material-ui/core';
 import Header from './components/header/Header';
 import List from './components/list/List';
 import Map from './components/map/Map';
@@ -21,6 +21,8 @@ const App = () => {
 	const [rating, setRating] = useState('');
 
 	const [filteredPlaces, setFilteredPlaces] = useState([]);
+
+	const isDesktop = useMediaQuery('(min-width:600px)');
 
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition(
@@ -51,7 +53,7 @@ const App = () => {
 	return (
 		<>
 			<CssBaseline />
-			<Header setCoords={setCoords} />
+			<Header setCoords={setCoords} isDesktop={isDesktop} />
 			<Grid container spacing={3} style={{ width: '100%', marginTop: '5px' }}>
 				<Grid item xs={12} md={4}>
 					<List
@@ -70,6 +72,7 @@ const App = () => {
 						setBounds={setBounds}
 						coords={coords}
 						places={filteredPlaces.length ? filteredPlaces : places}
+						isDesktop={isDesktop}
 						setChildClicked={setChildClicked}
 					/>
 				</Grid>

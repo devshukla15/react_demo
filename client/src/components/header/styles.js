@@ -2,7 +2,7 @@ import { alpha, makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
 	title: {
-		display: 'none',
+		alignItems: 'center',
 		[theme.breakpoints.up('sm')]: {
 			display: 'block',
 		},
@@ -19,6 +19,10 @@ export default makeStyles((theme) => ({
 			marginLeft: theme.spacing(3),
 			width: 'auto',
 		},
+	},
+	image: {
+		marginRight: '10px',
+		borderRadius: '20px',
 	},
 	searchIcon: {
 		padding: theme.spacing(0, 2),

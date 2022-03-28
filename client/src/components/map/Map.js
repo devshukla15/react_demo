@@ -1,14 +1,20 @@
 import React from 'react';
 import GoogleMapReact from 'google-map-react';
-import { Paper, Typography, useMediaQuery } from '@material-ui/core';
+import { Paper, Typography } from '@material-ui/core';
 import { LocationOnOutlined } from '@material-ui/icons';
 import { Rating } from '@material-ui/lab';
 
 import useStyles from './styles';
 
-const Map = ({ setCoords, setBounds, coords, places, setChildCliked }) => {
+const Map = ({
+	setCoords,
+	setBounds,
+	coords,
+	places,
+	setChildCliked,
+	isDesktop,
+}) => {
 	const classes = useStyles();
-	const isDesktop = useMediaQuery('(min-width:600px)');
 
 	return (
 		<div className={classes.mapContainer}>
