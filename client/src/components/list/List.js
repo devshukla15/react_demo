@@ -32,25 +32,32 @@ const List = ({
 		setElRefs(refs);
 	}, [places]);
 
+	console.log(type);
+
 	return (
 		<div className={classes.container}>
 			<Typography variant="h4">
 				Restaurant, Hotels and Attractions around you
 			</Typography>
+			<FormControl className={classes.formControl}>
+				<InputLabel>Type</InputLabel>
+				<Select
+					value={type}
+					onChange={(e) => {
+						setType(e.target.value);
+					}}
+				>
+					<MenuItem value="hotels">Hotels</MenuItem>
+					<MenuItem value="restaurants">Restaurant</MenuItem>
+					<MenuItem value="attractions">Attractions</MenuItem>
+				</Select>
+			</FormControl>
 			{isLoading ? (
 				<div className={classes.loading}>
 					<CircularProgress size="5rem" />
 				</div>
 			) : (
 				<>
-					<FormControl className={classes.formControl}>
-						<InputLabel>Type</InputLabel>
-						<Select value={type} onChange={(e) => setType(e.target.value)}>
-							<MenuItem value="Hotels">Hotels</MenuItem>
-							<MenuItem value="Restaurant">Restaurant</MenuItem>
-							<MenuItem value="Attractions">Attractions</MenuItem>
-						</Select>
-					</FormControl>
 					<FormControl className={classes.formControl}>
 						<InputLabel>Rating</InputLabel>
 						<Select value={rating} onChange={(e) => setRating(e.target.value)}>
