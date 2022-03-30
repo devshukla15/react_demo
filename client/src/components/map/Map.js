@@ -11,7 +11,7 @@ const Map = ({
 	setBounds,
 	coords,
 	places,
-	setChildCliked,
+	setChildClicked,
 	isDesktop,
 }) => {
 	const classes = useStyles();
@@ -24,48 +24,53 @@ const Map = ({
 				center={coords}
 				defaultZoom={15}
 				margin={[50, 50, 50, 50]}
-				options={(child) => {
-					setChildCliked(child);
+				options={{
+					disableDefaultUI: true,
+					zoomControl: true,
 				}}
 				onChange={(e) => {
 					setCoords({ lat: e.center.lat, lng: e.center.lng });
 					setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
 				}}
-				onChildClick={''}
+				onChildClick={(child) => {
+					setChildClicked(child);
+					console.log('child is ', child);
+				}}
 			>
-				{places?.map((place, index) => (
-					<div
-						className={classes.markerContainer}
-						lat={Number(place.latitude)}
-						lng={Number(place.longitude)}
-						key={index}
-					>
-						{isDesktop ? (
-							<LocationOnOutlined color="primary" fontSize="large" />
-						) : (
-							<Paper elevation={3} className={classes.paper}>
-								{' '}
-								<Typography
-									className={classes.Typography}
-									variant="subtitle2"
-									gutterBottom
-								>
-									{place.name}
-								</Typography>
-								<img
-									className={classes.pointer}
-									src={
-										place.photo
-											? place?.photo?.images?.large?.url
-											: 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'
-									}
-									alt={place.name}
-								/>
-								<Rating size="small" value={Number(place.rating)} readOnly />
-							</Paper>
-						)}
-					</div>
-				))}
+				{places?.length &&
+					places?.map((place, index) => (
+						<div
+							className={classes.markerContainer}
+							lat={Number(place.latitude)}
+							lng={Number(place.longitude)}
+							key={index}
+						>
+							{isDesktop ? (
+								<LocationOnOutlined color="primary" fontSize="large" />
+							) : (
+								<Paper elevation={3} className={classes.paper}>
+									{' '}
+									<Typography
+										className={classes.Typography}
+										variant="subtitle2"
+										gutterBottom
+									>
+										{place.name}
+									</Typography>
+									<img
+										className={classes.pointer}
+										src={
+											place.photo
+												? place?.photo?.images?.large?.url
+												: 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'
+										}
+										alt={place.name}
+									/>
+									<Rating size="small" value={Number(place.rating)} readOnly />
+								</Paper>
+							)}
+						</div>
+					))}
 			</GoogleMapReact>
 		</div>
 	);

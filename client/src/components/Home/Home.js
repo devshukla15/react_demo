@@ -2,19 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { CssBaseline, Grid, useMediaQuery } from '@material-ui/core';
 import Header from '../header/Header';
 import List from '../list/List';
-import Map from '../map/Map';
 import { getPlacesData } from '../../API/index';
+import Map from '../map/Map';
 
-const Home = () => {
+const Home = ({ coords, setCoords }) => {
 	const [places, setPlaces] = useState([]);
-
-	const [coords, setCoords] = useState({});
 
 	const [bounds, setBounds] = useState({});
 
 	const [childClicked, setChildClicked] = useState(null);
 
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 
 	const [type, setType] = useState('restaurants');
 
@@ -22,15 +20,7 @@ const Home = () => {
 
 	const [filteredPlaces, setFilteredPlaces] = useState([]);
 
-	const isDesktop = useMediaQuery('(min-width:600px)');
-
-	useEffect(() => {
-		navigator.geolocation.getCurrentPosition(
-			({ coords: { latitude, longitude } }) => {
-				setCoords({ lat: latitude, lng: longitude });
-			}
-		);
-	}, []);
+	const isDesktop = useMediaQuery('(max-width:600px)');
 
 	useEffect(() => {
 		const filteredPlaces = places.filter((place) => place.rating > rating);
@@ -45,7 +35,8 @@ const Home = () => {
 				console.log('data is ', data);
 				setFilteredPlaces([]);
 				setPlaces(data?.filter((place) => place.name && place.num_reviews > 0));
-				setIsLoading(true);
+				setIsLoading(false);
+				setRating('');
 			}
 		});
 	}, [type, bounds]);
@@ -53,7 +44,6 @@ const Home = () => {
 	return (
 		<>
 			<CssBaseline />
-			<Header setCoords={setCoords} isDesktop={isDesktop} />
 
 			<Grid container spacing={3} style={{ width: '100%', marginTop: '5px' }}>
 				<Grid item xs={12} md={4}>

@@ -22,13 +22,14 @@ const List = ({
 }) => {
 	const classes = useStyles();
 
+	console.log({ childClicked });
+
 	const [elRefs, setElRefs] = useState([]);
 
 	useEffect(() => {
 		const refs = Array(places?.length)
 			.fill()
 			.map((_, index) => elRefs[index] || createRef());
-
 		setElRefs(refs);
 	}, [places]);
 
@@ -69,12 +70,12 @@ const List = ({
 					</FormControl>
 					<Grid container spacing={3} className={classes.list}>
 						{places?.map((place, index) => (
-							<Grid item key={index} xs={12}>
+							<Grid item key={index} ref={elRefs[index]} xs={12}>
 								{' '}
 								<PlaceDetails
 									place={place}
 									selected={Number(childClicked) === index}
-									refProps={elRefs[index]}
+									refProp={elRefs[index]}
 								/>{' '}
 							</Grid>
 						))}

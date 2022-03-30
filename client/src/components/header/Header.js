@@ -16,18 +16,18 @@ import useStyles from './styles';
 const Header = ({ setCoords, isDesktop }) => {
 	const classes = useStyles();
 
-	const user = null;
+	const user = true;
 
-	const [autoComplete, setAutoComplete] = useState(null);
+	const [autocomplete, setAutocomplete] = useState(null);
 
 	const onPlaceChanged = () => {
-		const lat = autoComplete.getPlace().geometry.location.lat();
-		const lng = autoComplete.getPlace().geometry.location.lng();
+		const lat = autocomplete.getPlace().geometry.location.lat();
+		const lng = autocomplete.getPlace().geometry.location.lng();
 
 		setCoords({ lat, lng });
 	};
 
-	const onLoad = (autoC) => setAutoComplete(autoC);
+	const onLoad = (autoC) => setAutocomplete(autoC);
 
 	return (
 		<AppBar position="static">
