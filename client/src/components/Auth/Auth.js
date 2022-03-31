@@ -4,12 +4,15 @@ import {
 	Paper,
 	Typography,
 	Grid,
-	TextField,
 	Button,
 } from '@material-ui/core';
 import { LockOutlined } from '@material-ui/icons';
+import { useDispatch } from 'react-redux';
+import { GoogleLogin } from 'react-google-login';
+import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import Input from './Input';
+import Icon from './Icon';
 import useStyles from './styles';
 
 const Auth = () => {
@@ -17,9 +20,30 @@ const Auth = () => {
 
 	const [isSignUp, setIsSignUp] = useState(false);
 
+	const navigate = useNavigate();
+
+	const dispatch = useDispatch();
+
 	const handleSubmit = () => {};
 
 	const handleChange = () => {};
+
+	const googleFailure = (error) => {
+		console.log(error);
+		console.log('google sign in failed , please try agian later');
+	};
+
+	const googleSuccess = async (res) => {
+		const result = res?.profileObj;
+		const token = res?.tokenId;
+
+		try {
+			dispatch({ type: 'AUTH', data: { result, token } });
+			navigate('/');
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	const switchMode = () => {
 		setIsSignUp((previsSignUp) => !previsSignUp);
@@ -80,6 +104,7 @@ const Auth = () => {
 							/>
 						)}
 					</Grid>
+
 					<Button
 						type="submit"
 						fullWidth
@@ -89,7 +114,27 @@ const Auth = () => {
 					>
 						{isSignUp ? 'Sign Up' : 'Sign In'}
 					</Button>
-					<Grid container justify="flex-end">
+					<GoogleLogin
+						clientId="381515540195-cu60h9872n5gprriji368laqrq3hd3v1.apps.googleusercontent.com"
+						render={(renderProps) => (
+							<Button
+								className={classes.googleButton}
+								color="secondary"
+								fullWidth
+								onClick={renderProps.onClick}
+								disabled={renderProps.disabled}
+								startIcon={<Icon />}
+								variant="contained"
+							>
+								Google Sign In
+							</Button>
+						)}
+						onSuccess={googleSuccess}
+						onFailure={googleFailure}
+						cookiePolicy="single_host_origin"
+					/>
+
+					<Grid container justifyContent="flex-end">
 						<Grid item>
 							<Button onClick={switchMode}>
 								{isSignUp

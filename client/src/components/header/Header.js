@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Autocomplete } from '@react-google-maps/api';
 import {
 	AppBar,
@@ -16,7 +16,15 @@ import useStyles from './styles';
 const Header = ({ setCoords, isDesktop }) => {
 	const classes = useStyles();
 
-	const user = true;
+	const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
+	console.log(user);
+
+	useEffect(() => {
+		const token = user?.token;
+
+		setUser(JSON.parse(localStorage.getItem('profile')));
+	}, []);
 
 	const [autocomplete, setAutocomplete] = useState(null);
 
@@ -33,17 +41,7 @@ const Header = ({ setCoords, isDesktop }) => {
 		<AppBar position="static">
 			<Toolbar className={classes.toolbar}>
 				<Typography variant="h5" className={classes.title}>
-					{isDesktop ? (
-						<a>Traveller</a>
-					) : (
-						<img
-							src="logo2.png"
-							height="30"
-							alt="icon"
-							width="30"
-							className={classes.image}
-						/>
-					)}
+					<a>Traveller</a>
 				</Typography>
 				<Box display="flex">
 					{user ? (
