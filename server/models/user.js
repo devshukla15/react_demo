@@ -7,6 +7,6 @@ const userSchema = Mongoose.Schema({
 	id: { type: String },
 });
 
-var user = Mongoose.Mongoose('User', userSchema);
+var user = Mongoose.model('User', userSchema);
 
 export default user;
