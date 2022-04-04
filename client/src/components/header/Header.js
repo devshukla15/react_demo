@@ -7,24 +7,38 @@ import {
 	InputBase,
 	Box,
 	Button,
+	Avatar,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useLocation } from 'react-router';
 
 import useStyles from './styles';
 
 const Header = ({ setCoords, isDesktop }) => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const location = useLocation();
 
 	const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
-	console.log(user);
+	const logOut = () => {
+		dispatch({ type: 'LOGOUT' });
+
+		navigate('/');
+
+		setUser(null);
+	};
+
+	console.log('user is ', user);
 
 	useEffect(() => {
 		const token = user?.token;
 
 		setUser(JSON.parse(localStorage.getItem('profile')));
-	}, []);
+	}, [location]);
 
 	const [autocomplete, setAutocomplete] = useState(null);
 
@@ -38,17 +52,29 @@ const Header = ({ setCoords, isDesktop }) => {
 	const onLoad = (autoC) => setAutocomplete(autoC);
 
 	return (
-		<AppBar position="static">
+		<AppBar className={classes.AppBar}>
 			<Toolbar className={classes.toolbar}>
-				<Typography variant="h5" className={classes.title}>
-					<a>Traveller</a>
-				</Typography>
+				<Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
+					<Typography variant="h5" className={classes.title}>
+						Traveller
+					</Typography>
+				</Link>
 				<Box display="flex">
 					{user ? (
 						<>
-							<Typography variant="h6" className={classes.title}>
-								Explore new places
-							</Typography>
+							<div className={classes.profile}>
+								<Avatar
+									className={classes.purple}
+									alt={user.result.name}
+									src={user.result.imageUrl}
+								>
+									{user.result.name.slice(0, 1)}
+								</Avatar>
+								<Typography variant="h6" className={classes.title}>
+									{user.result.name}
+								</Typography>
+							</div>
+
 							<Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
 								<div className={classes.search}>
 									<div className={classes.searchIcon}>
@@ -64,7 +90,7 @@ const Header = ({ setCoords, isDesktop }) => {
 								</div>
 							</Autocomplete>
 
-							<Button variant="contained" onClick={''}>
+							<Button variant="contained" onClick={logOut}>
 								Logout
 							</Button>
 						</>

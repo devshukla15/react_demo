@@ -1,7 +1,9 @@
 import { alpha, makeStyles } from '@material-ui/core/styles';
+import { deepPurple } from '@material-ui/core/colors';
 
 export default makeStyles((theme) => ({
 	title: {
+		display: 'none',
 		alignItems: 'center',
 		[theme.breakpoints.up('sm')]: {
 			display: 'block',
@@ -39,7 +41,6 @@ export default makeStyles((theme) => ({
 	inputInput: {
 		padding: theme.spacing(1, 1, 1, 0),
 		paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-		// paddingLeft: '40px' ,
 		transition: theme.transitions.create('width'),
 		width: '100%',
 		[theme.breakpoints.up('md')]: { width: '20ch' },
@@ -47,5 +48,15 @@ export default makeStyles((theme) => ({
 	toolbar: {
 		display: 'flex',
 		justifyContent: 'space-between',
+	},
+	profile: {
+		display: 'flex',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		width: '150px',
+	},
+	purple: {
+		color: theme.palette.getContrastText(deepPurple[500]),
+		backgroundColor: deepPurple[500],
 	},
 }));

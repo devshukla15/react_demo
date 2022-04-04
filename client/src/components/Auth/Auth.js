@@ -14,19 +14,38 @@ import React, { useState } from 'react';
 import Input from './Input';
 import Icon from './Icon';
 import useStyles from './styles';
+import { signin, signup } from '../../actions/auth';
+
+const initialState = {
+	firstName: '',
+	lastName: '',
+	email: '',
+	password: '',
+	confirmPassword: '',
+};
 
 const Auth = () => {
 	const classes = useStyles();
 
 	const [isSignUp, setIsSignUp] = useState(false);
+	const [formData, setFormData] = useState(initialState);
 
 	const navigate = useNavigate();
 
 	const dispatch = useDispatch();
 
-	const handleSubmit = () => {};
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		if (isSignUp) {
+			dispatch(signup(formData, navigate));
+		} else {
+			dispatch(signin(formData, navigate));
+		}
+	};
 
-	const handleChange = () => {};
+	const handleChange = (e) => {
+		setFormData({ ...formData, [e.target.name]: e.target.value });
+	};
 
 	const googleFailure = (error) => {
 		console.log(error);
@@ -47,7 +66,7 @@ const Auth = () => {
 
 	const switchMode = () => {
 		setIsSignUp((previsSignUp) => !previsSignUp);
-		handleShowPassword(showPassword);
+		setShowPassword(false);
 	};
 
 	const handleShowPassword = () => {

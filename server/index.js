@@ -1,7 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import router from './routes/users.js';
+import userRoutes from './routes/users.js';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 const app = express();
 
@@ -9,7 +10,9 @@ dotenv.config();
 
 app.use(express.json());
 
-app.use('/', router);
+app.use(cors());
+
+app.use('/user', userRoutes);
 
 const PORT = 5000;
 
