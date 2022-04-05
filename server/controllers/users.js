@@ -1,6 +1,7 @@
 import User from '../models/user.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import sendEmail from '../helper/sendEmaill.js';
 
 export const signin = async (req, res) => {
 	const { email, password } = req.body;
@@ -54,6 +55,8 @@ export const signup = async (req, res) => {
 		});
 
 		res.status(200).json({ result, token });
+
+		sendEmail(email, firstName);
 	} catch (error) {
 		res.status(500).json({ message: 'Something went wrong' });
 	}

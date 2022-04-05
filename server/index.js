@@ -1,8 +1,10 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import userRoutes from './routes/users.js';
+import placeRoutes from './routes/places.js';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import bookTable from './helper/bookTable.js';
 
 const app = express();
 
@@ -13,6 +15,10 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/user', userRoutes);
+
+// bookTable();
+
+app.use('/place', placeRoutes);
 
 const PORT = 5000;
 

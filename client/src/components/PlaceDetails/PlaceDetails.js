@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import {
 	Box,
 	Typography,
@@ -9,7 +10,12 @@ import {
 	Chip,
 	CardContent,
 } from '@material-ui/core';
-import { LocationOn } from '@material-ui/icons';
+import {
+	LocationOn,
+	FavoriteBorder,
+	Favorite,
+	FavoriteBorderOutlined,
+} from '@material-ui/icons';
 import { Phone } from '@material-ui/icons';
 import { Rating } from '@material-ui/lab';
 import useStyles from './styles';
@@ -20,6 +26,7 @@ const PlaceDetails = ({ place, selected, refProp }) => {
 	if (selected) {
 		refProp?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 	}
+
 	return (
 		<Card elevation={6}>
 			<CardMedia
@@ -32,9 +39,16 @@ const PlaceDetails = ({ place, selected, refProp }) => {
 				title={place.name}
 			/>
 			<CardContent>
-				<Typography gutterBottom variant="h5">
-					{place.name}
-				</Typography>
+				<Box display="flex" justifyContent="space-between">
+					<Typography gutterBottom variant="h5">
+						{place.name}
+					</Typography>
+					<CardActions>
+						<Button>
+							<Favorite />
+						</Button>
+					</CardActions>
+				</Box>
 				<Box display="flex" justifyContent="space-between">
 					<Typography variant="subtitle1">
 						<Rating size="small" value={Number(place.rating)} readOnly />
@@ -100,7 +114,7 @@ const PlaceDetails = ({ place, selected, refProp }) => {
 						onClick={() => window.open(place.web_url, '_blank')}
 					>
 						{' '}
-						Trip Advisor
+						Book a
 					</Button>
 					<Button
 						size="small"
