@@ -18,15 +18,14 @@ const App = () => {
 
   return (
     <>
-      {/* <Header setCoords={setCoords} />
-			<Routes>
-				<Route
-					path="/"
-					element={<Home setCoords={setCoords} coords={coords} />}
-				/>
-				<Route path="/auth" element={<Auth />} />
-			</Routes> */}
-      <Reservation />
+      <Header setCoords={setCoords} />
+      <Routes>
+        <Route
+          path="/"
+          element={<Home setCoords={setCoords} coords={coords} />}
+        />
+        <Route path="/auth" element={<Auth />} />
+      </Routes>
     </>
   )
 }
