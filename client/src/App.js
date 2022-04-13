@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router"
 import Auth from "./components/Auth/Auth"
 import Header from "./components/header/Header"
 import Reservation from "./components/reservation/Reservation"
+import Footer from "./components/Footer/Footer"
 
 const App = () => {
   const [coords, setCoords] = useState({})
@@ -26,7 +27,8 @@ const App = () => {
         />
         <Route path="/auth" element={<Auth />} />
       </Routes> */}
-      <Reservation />
+      {/* <Reservation /> */}
+      <Footer />
     </>
   )
 }

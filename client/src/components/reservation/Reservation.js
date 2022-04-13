@@ -13,8 +13,6 @@ const initialState = {
   fullName: "",
   email: "",
   person: "",
-  startDate: "",
-  endDate: "",
 }
 
 const Reservation = () => {
@@ -22,14 +20,19 @@ const Reservation = () => {
 
   const [reservationData, setReservationData] = useState(initialState)
 
+  const [startDate, setStartDate] = useState(new Date())
+  const [endDate, setEndDate] = useState(new Date())
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    dispatch()
+    // dispatch()
   }
 
-  const handleChange = (e) => {
+  const handleChange = (e, date) => {
     setReservationData({ ...reservationData, [e.target.name]: e.target.value })
+    setStartDate(date)
+    setEndDate(date)
   }
   return (
     <Container component="main" maxWidth="sm">
@@ -60,14 +63,14 @@ const Reservation = () => {
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <KeyboardDatePicker
                 label="start Date"
-                name="startDate"
+                value={startDate}
                 className={classes.startDate}
                 onChange={handleChange}
               />
 
               <KeyboardDatePicker
                 label="End Date"
-                name="endDate"
+                value={endDate}
                 className={classes.endDate}
                 onChange={handleChange}
               />
